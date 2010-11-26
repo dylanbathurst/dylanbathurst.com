@@ -3,7 +3,7 @@ var sys = require('sys'),
     http = require('http'),
     url = require('url'),
     drouter = require('../node-router/lib/node-router');
-    couchdb = require('node-couchdb/lib/couchdb'),
+    couchdb = require('../node-couchdb/lib/couchdb'),
     
     // CouchDB Connection
     client = couchdb.createClient(5984, 'localhost'),
