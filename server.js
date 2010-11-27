@@ -6,7 +6,7 @@ var sys = require('sys'),
     couchdb = require('../node-couchdb/lib/couchdb'),
     
     // CouchDB Connection
-    client = couchdb.createClient(5984, 'http://dylan.couchone.com/'),
+    client = couchdb.createClient(5984, 'dylan.couchone.com'),
     dbBlog = client.db('db-blog'),
     dbAbout = client.db('db-about');
 
