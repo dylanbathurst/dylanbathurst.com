@@ -17,7 +17,7 @@ var ctx = {
     return this.loop.length !== 0;
   },
   empty: function() {
-    return this.loop.length === 0;
+    return this.loop[0].body !== '';
   }
 };
 
@@ -73,15 +73,14 @@ server.get('/blog/', function(req, res) {
     }
   });
   function addDoc(doc, allDocLen) {
+    doc.body = '';
     if (doc.date) {
       var dateObj = {};
       dateObj['cleanDate'] = doc.date;
       dateObj['styledDate'] = doc.date.replace(/-/g, '// ');
       doc.date = dateObj;
     }
-    console.log(doc.date);
     ctx.loop.push(doc); 
-    
     if (ctx.loop.length == allDocLen) {
       Mu.deepRender(req, res, ctx, './blog/posts.html');
     }
@@ -95,7 +94,10 @@ server.get(new RegExp('^/blog/(.*)/$'), function(req, res, match) {
   ctx.loop = [];
 
   dbBlog.allDocs(function(err, all) {
-    if(err) throw err;
+    if(err) {
+      sys.print(JSON.stringify(err));
+      res.simpleHtml(404, '404.html.mu');  
+    } 
     postId = all.rows[urlId].id;
     
     dbBlog.getDoc(postId, function(docErr, doc) {
