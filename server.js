@@ -46,7 +46,7 @@ server.get('/about/', function(req, res) {
   var about = {};
   dbAbout.getDoc('a367d47a0374755a2d8735cab0001990', function(docErr, doc) {
     if(docErr) {
-      sys.print(JSON.stringify(docErr);
+      sys.print(JSON.stringify(docErr));
       res.simpleHtml(404, '404.html.mu');  
     } 
     
