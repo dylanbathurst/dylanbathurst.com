@@ -1,6 +1,6 @@
 <article>
   <header>About {{name}}!!!</header>
   <section>
-  {{body}}
+  {{{body}}}
   </section>
 </article>
