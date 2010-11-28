@@ -145,6 +145,6 @@ Mu.deepRender = function(req, res, data, tmpl, layout) {
 
 
 // set port to listen on
-server.listen(8000);
+server.listen(80);
 
 
