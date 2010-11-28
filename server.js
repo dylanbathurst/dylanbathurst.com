@@ -1,15 +1,17 @@
 var sys = require('sys'),
-    Mu = require('../Mu/lib/mu'),
+    path = require('path'),
+    Mu = require('Mu/lib/mu'),
     http = require('http'),
     url = require('url'),
-    drouter = require('../node-router/lib/node-router');
-    couchdb = require('../node-couchdb/lib/couchdb'),
+    drouter = require('node-router/lib/node-router');
+    couchdb = require('node-couchdb/lib/couchdb'),
     
     // CouchDB Connection
     client = couchdb.createClient(5984, 'dylan.couchone.com'),
     dbBlog = client.db('db-blog'),
     dbAbout = client.db('db-about');
 
+console.log(path.dirname('/foo/server.js'));
 
 var ctx = {
   loop: [],
