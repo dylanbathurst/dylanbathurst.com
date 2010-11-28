@@ -1,5 +1,4 @@
 var sys = require('sys'),
-    path = require('path'),
     Mu = require('Mu/lib/mu'),
     http = require('http'),
     url = require('url'),
@@ -10,8 +9,6 @@ var sys = require('sys'),
     client = couchdb.createClient(5984, 'dylan.couchone.com'),
     dbBlog = client.db('db-blog'),
     dbAbout = client.db('db-about');
-
-console.log(path.dirname('/foo/server.js'));
 
 var ctx = {
   loop: [],
@@ -148,6 +145,6 @@ Mu.deepRender = function(req, res, data, tmpl, layout) {
 
 
 // set port to listen on
-server.listen(80);
+server.listen(8000);
 
 
