@@ -6,7 +6,7 @@ var sys = require('sys'),
     couchdb = require('../node-couchdb/lib/couchdb'),
     
     // CouchDB Connection
-    client = couchdb.createClient(5984, 'localhost'),
+    client = couchdb.createClient(5984, 'dylan.couchone.com'),
     dbBlog = client.db('db-blog'),
     dbAbout = client.db('db-about');
 
@@ -146,6 +146,6 @@ Mu.deepRender = function(req, res, data, tmpl, layout) {
 
 
 // set port to listen on
-server.listen(8000);
+server.listen(80);
 
 
