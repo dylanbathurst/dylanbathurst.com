@@ -6,7 +6,7 @@ var sys = require('sys'),
     couchdb = require('../node-couchdb/lib/couchdb'),
     
     // CouchDB Connection
-    client = couchdb.createClient(5984, 'dylan.couchone.com'),
+    client = couchdb.createClient(5984, 'localhost'),
     dbBlog = client.db('db-blog'),
     dbAbout = client.db('db-about');
 
@@ -87,7 +87,7 @@ server.get('/blog/', function(req, res) {
   }
 });
 
-// setup individual blog post url handler`
+// setup individual blog post url handler
 server.get(new RegExp('^/blog/(.*)/$'), function(req, res, match) {
   var postId,
       urlId = match.substring(0, 1) - 1;
@@ -98,6 +98,7 @@ server.get(new RegExp('^/blog/(.*)/$'), function(req, res, match) {
       sys.print(JSON.stringify(err));
       res.simpleHtml(404, '404.html.mu');  
     } 
+    console.log(urlId);
     postId = all.rows[urlId].id;
     
     dbBlog.getDoc(postId, function(docErr, doc) {
@@ -145,6 +146,6 @@ Mu.deepRender = function(req, res, data, tmpl, layout) {
 
 
 // set port to listen on
-server.listen(80);
+server.listen(8000);
 
 
