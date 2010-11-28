@@ -1,6 +1,9 @@
-<article>
-  <header>About {{name}}!!!</header>
-  <section>
+<article id="aboutPage">
+  <header>
+    <section>
+      {{{summary}}}
+    </section>
+  </header>
   {{{body}}}
   </section>
 </article>

@@ -97,8 +97,8 @@ server.get('/about/', function(req, res) {
       res.simpleHtml(404, '404.html.mu');  
     } 
     
-    about['name'] = doc.name;
     about['body'] = doc.body;
+    about['summary'] = doc.summary;
     Mu.deepRender(req, res, about, 'about.html');
   });
 });
@@ -154,6 +154,6 @@ server.get(new RegExp('^/js/(.*)$'), function(req, res) {return js(req, res);});
 server.get(new RegExp('^/imgs/(.*)$'), function(req, res) {return imgs(req, res);});   
 
 // set port to listen on
-server.listen(80);
+server.listen(8000);
 
 
