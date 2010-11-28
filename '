@@ -8,13 +8,7 @@ var sys = require('sys'),
     // CouchDB Connection
     client = couchdb.createClient(5984, 'dylan.couchone.com'),
     dbBlog = client.db('db-blog'),
-    dbAbout = client.db('db-about'),
-    jsFilesArray = [];
-
-Mu.templateRoot = './templates';
-
-//start server
-var server = drouter.getServer();
+    dbAbout = client.db('db-about');
 
 var ctx = {
   loop: [],
@@ -23,20 +17,47 @@ var ctx = {
   },
   empty: function() {
     return this.loop[0].body !== '';
-  }
+  },
+  jsPackages : ['homepage','blog'];
 };
+
+Mu.templateRoot = './templates';
+
+//start server
+var server = drouter.getServer();
+
+// setup static content handlers
+var styles = drouter.staticDirHandler('./static', 'css');
+var js = drouter.staticDirHandler('./static', 'js');
+var imgs = drouter.staticDirHandler('./static', 'imgs');
+
+// setup static content url handlers
+server.get(new RegExp('^/css/(.*)$'), function(req, res) {return styles(req, res);});
+server.get(new RegExp('^/js/(.*)$'), function(req, res) {return js(req, res);});   
+server.get(new RegExp('^/imgs/(.*)$'), function(req, res) {return imgs(req, res);});   
 
 // setup main nav url handlers
 server.get('/', function(req, res) {
   var home = {};
-  jsFilesArray = [{"file":"homepage"}];
   Mu.deepRender(req, res, home, 'home.html');
+});
+
+server.get('/about/', function(req, res) {
+  var about = {};
+  dbAbout.getDoc('c5ccc4296b4f2810d77ddafd1c0370f6', function(docErr, doc) {
+    if(docErr) {
+      sys.print(JSON.stringify(docErr));
+      res.simpleHtml(404, '404.html.mu');  
+    } 
+    
+    about['name'] = doc.name;
+    about['body'] = doc.body;
+    Mu.deepRender(req, res, about, 'about.html');
+  });
 });
 
 server.get('/blog/', function(req, res) {
   ctx.loop = [];
-  jsFilesArray = [{"file":"blog"}];
-
   dbBlog.allDocs(function(err, all) {
     if(err) throw err;
 
@@ -89,29 +110,12 @@ server.get(new RegExp('^/blog/(.*)/$'), function(req, res, match) {
   });
 });
 
-server.get('/about/', function(req, res) {
-  var about = {};
-  dbAbout.getDoc('c5ccc4296b4f2810d77ddafd1c0370f6', function(docErr, doc) {
-    if(docErr) {
-      sys.print(JSON.stringify(docErr));
-      res.simpleHtml(404, '404.html.mu');  
-    } 
-    
-    about['name'] = doc.name;
-    about['body'] = doc.body;
-    Mu.deepRender(req, res, about, 'about.html');
-  });
-});
-
 //extending Mu
 Mu.deepRender = function(req, res, data, tmpl, layout) {
-  var buffer = {
-    content: '', 
-    jsPackages: jsFilesArray, //[{"file":"homepage"},{"file":"blog"}], 
-    jsFile: function() {return this.jsPackages}
-  };
+  var buffer = {content: ''};
   var layout = (layout || 'layout.html');
   var finalProd = '';
+  var finalFinalProd = '';
 
   Mu.compile(tmpl, function(err, compiled) {
     if (err) throw err;
@@ -140,15 +144,6 @@ Mu.deepRender = function(req, res, data, tmpl, layout) {
   }
 };
 
-// setup static content handlers
-var styles = drouter.staticDirHandler('./static', 'css');
-var js = drouter.staticDirHandler('./static', 'js');
-var imgs = drouter.staticDirHandler('./static', 'imgs');
-
-// setup static content url handlers
-server.get(new RegExp('^/css/(.*)$'), function(req, res) {return styles(req, res);});
-server.get(new RegExp('^/js/(.*)$'), function(req, res) {return js(req, res);});   
-server.get(new RegExp('^/imgs/(.*)$'), function(req, res) {return imgs(req, res);});   
 
 // set port to listen on
 server.listen(8000);

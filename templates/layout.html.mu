@@ -30,7 +30,8 @@
       <li><a href="http://www.linkedin.com/in/dylanbathurst">linkedin</a></li>
     </ul>
   </footer>
-  <script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
-  <script type="text/javascript" src="/js/behavior.js"></script>
+  {{#jsFile}}
+    <script type="text/javascript" src="/js/{{file}}.js"></script>
+  {{/jsFile}}
 </body>
 </html>
