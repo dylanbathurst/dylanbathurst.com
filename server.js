@@ -107,8 +107,8 @@ server.get('/about/', function(req, res) {
 Mu.deepRender = function(req, res, data, tmpl, layout) {
   var buffer = {
     content: '', 
-    jsPackages: jsFilesArray, //[{"file":"homepage"},{"file":"blog"}], 
-    jsFile: function() {return this.jsPackages}
+    jsPackages: jsFilesArray, //[{"file":"homepage"},{"file":"blog"}] 
+    jsFile: function() {return this.jsPackages;}
   };
   var layout = (layout || 'layout.html');
   var finalProd = '';
@@ -125,6 +125,9 @@ Mu.deepRender = function(req, res, data, tmpl, layout) {
         MuRender();
       });
     });
+
+  jsFilesArray = [];
+
   function MuRender() {
     Mu.render(layout, buffer, {}, function(err, output) {
       if (err) throw err;
