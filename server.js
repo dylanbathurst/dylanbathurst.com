@@ -154,6 +154,6 @@ server.get(new RegExp('^/js/(.*)$'), function(req, res) {return js(req, res);});
 server.get(new RegExp('^/imgs/(.*)$'), function(req, res) {return imgs(req, res);});   
 
 // set port to listen on
-server.listen(80);
+server.listen(8000);
 
 

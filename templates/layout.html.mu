@@ -22,13 +22,15 @@
     {{{content}}}
   </section>
   <footer>
-    <p>Awesomely Powered by <a class="nodeSmall" href="http://www.nodejs.com/">NodeJS</a></p>
-    <ul id="onlinePresence">
-      <li><a href="http://www.twitter.com/dylanbathurst">twitter</a></li>
-      <li><a href="http://www.flickr.com/dylanbathurst">flickr</a></li>
-      <li><a href="http://www.facebook.com/dylanbathurst">facebook</a></li>
-      <li><a href="http://www.linkedin.com/in/dylanbathurst">linkedin</a></li>
-    </ul>
+    <aside>
+      <p>Awesomely Powered by <a class="nodeSmall" href="http://www.nodejs.com/">NodeJS</a></p>
+      <ul id="onlinePresence">
+        <li><a href="http://www.twitter.com/dylanbathurst">twitter</a></li>
+        <li><a href="http://www.flickr.com/dylanbathurst">flickr</a></li>
+        <li><a href="http://www.facebook.com/dylanbathurst">facebook</a></li>
+        <li><a href="http://www.linkedin.com/in/dylanbathurst">linkedin</a></li>
+      </ul>
+    </aside>
   </footer>
   {{#jsFile}}
     <script type="text/javascript" src="/js/{{file}}.js"></script>

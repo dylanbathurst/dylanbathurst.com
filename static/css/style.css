@@ -12,8 +12,8 @@ a:hover {color:#333; text-decoration:none;}
 #branding nav {margin:60px 0 0; padding:0 20px; float:left;}
 nav li {display:inline; padding:0 8px 0 0;}
 nav a {color:#555;}
-#content {min-width:550px; max-width:800px; width:60%; padding:0 20px; line-height:170%;}
-#content article {position:relative; width:550px; padding:15px 0 15px 50px; border:solid #fff; border-bottom-color:#999; border-width:1px 0;}
+#content {min-width:550px; max-width:800px; width:60%; margin:0 0 0 175px; line-height:170%;}
+#content article {position:relative; width:550px; padding:0; border:solid #fff; border-bottom-color:#999; border-width:1px 0;}
 #content h2 {line-height:100%;}
 article p {margin:0 0 15px;}
 #content article:first-child {border-top-width:0px;}
@@ -30,8 +30,11 @@ footer .nodeSmall {display:inline-block; width:115px; height:40px; margin-top:-5
 #onlinePresence a {color:#555;}
 
 /* about */
-#content #aboutPage {width:700px;}
+#content #aboutPage {width:630px;}
+#aboutPhoto {position:absolute; right:-280px; width:260px; height:202px; background:url('/imgs/aboutSprite.png') no-repeat left top; -moz-box-shadow: 10px 10px 5px #888; -webkit-box-shadow: 1px 1px 5px #000; -webkit-border-radius:10px;}
+#aboutPhoto p {position:absolute; bottom:-50px; left:10px; color:#999; font-size:12px;}
+#aboutPhoto a {color:#555;}
 #aboutPage header {background:rgba(0,0,0,.1);}
-#aboutSummary {margin:0 0 15px; font-size:12px; list-style-type:decimal-leading-zero; -webkit-column-count:3; -webkit-column-gap:5px; -moz-column-count:3;}
-#aboutSummary li {margin:0 0 0 23px;}
+#aboutSummary {margin:0 0 15px; font-size:12px; list-style-type:decimal-leading-zero; -webkit-column-count:3; -webkit-column-gap:15px; -moz-column-count:3; -moz-column-gap:15px;}
+#aboutSummary li {width:187px; margin:0 0 0 23px;}
 
