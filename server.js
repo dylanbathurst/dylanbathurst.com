@@ -1,5 +1,5 @@
 var sys = require('sys'),
-    Mu = require('Mu/lib/mu'),
+    Mu = require('../Mu/lib/mu'),
     http = require('http'),
     url = require('url'),
     drouter = require('node-router/lib/node-router');
@@ -11,7 +11,7 @@ var sys = require('sys'),
     dbAbout = client.db('db-about'),
     jsFilesArray = [];
 
-Mu.templateRoot = './templates';
+Mu.root = './templates';
 
 //start server
 var server = drouter.getServer();
@@ -30,7 +30,7 @@ var ctx = {
 server.get('/', function(req, res) {
   var home = {};
   jsFilesArray = [{"file":"homepage"}];
-  Mu.deepRender(req, res, home, 'home.html');
+  Mu.deepRender(req, res, home, 'home.html.mu');
 });
 
 server.get('/blog/', function(req, res) {
@@ -110,13 +110,13 @@ Mu.deepRender = function(req, res, data, tmpl, layout) {
     jsPackages: jsFilesArray, //[{"file":"homepage"},{"file":"blog"}] 
     jsFile: function() {return this.jsPackages;}
   };
-  var layout = (layout || 'layout.html');
+  var layout = (layout || 'layout.html.mu');
   var finalProd = '';
 
   Mu.compile(tmpl, function(err, compiled) {
     if (err) throw err;
 
-    compiled(data) 
+    Mu.render(compiled, data) 
       .addListener('data', function(c) {
         
         buffer.content += c; 
@@ -129,10 +129,10 @@ Mu.deepRender = function(req, res, data, tmpl, layout) {
   jsFilesArray = [];
 
   function MuRender() {
-    Mu.render(layout, buffer, {}, function(err, output) {
+    Mu.compile(layout, function(err, compiled) {
       if (err) throw err;
 
-      output
+      Mu.render(compiled, data)
         .addListener('data', function(c) {
           finalProd += c;      
         })
@@ -154,6 +154,6 @@ server.get(new RegExp('^/js/(.*)$'), function(req, res) {return js(req, res);});
 server.get(new RegExp('^/imgs/(.*)$'), function(req, res) {return imgs(req, res);});   
 
 // set port to listen on
-server.listen(80);
+server.listen(3000);
 
 
