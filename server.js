@@ -2,16 +2,13 @@ var sys = require('sys'),
     http = require('http'),
     path = require('path'),
     url = require('url'),
-    mu = require('../Mu/lib/mu'),
+    mu = require('mu'),
     events = require('events').EventEmitter,
     couchdb = require('./lib/couchdb'),
     fs = require('fs');
 
-couchdb.setup({
-  db: 'dylanbathurstcom',
-  host: '127.0.0.1'
-});
 
+var cache = {};
 
 
 http.createServer(function (req, res) {
@@ -21,49 +18,76 @@ http.createServer(function (req, res) {
   switch (uri) {
     case '/':
 
-      var fileEmitter = new events(),
-          view = {posts: []};
+      if (cache.homepage) {
+        console.log('cached');
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(cache.homepage);
+        res.end();
+      } else {
+        console.log('not cached');
+
+        couchdb.setup({
+          db: 'dylanbathurstcom',
+          host: '127.0.0.1'
+        });
+
+        var fileEmitter = new events(),
+            view = {posts: []};
 
 
-      mu.fs('./templates/layout.html', function (err, data) {
-        if (err) throw err;
+        mu.fs('./templates/layout.html', function (err, data) {
+          if (err) throw err;
 
-        var handler = function (posts) {
-          var couchRes = JSON.parse(posts), i, len, buff = '';
+          var handler = function (posts) {
+            var couchRes = JSON.parse(posts), i, len, buff = '';
 
-          len = couchRes.rows.length;
+            len = couchRes.rows.length;
 
-          for (var i = 0; i < len; i++) {
-            var post = couchRes.rows[i].value,
-                title = post.title,
-                body = post.post;
+            for (var i = 0; i < len; i++) {
+              var post = couchRes.rows[i].value,
+                  title = post.title,
+                  body = post.post;
 
-            view.posts.push({title: title, post: body});
-          }
+              view.posts.push({title: title, post: body});
+            }
 
-          var numErrors = 0,
-              buffer = '';
+            var numErrors = 0,
+                buffer = '';
 
-          mu.compileText('layout.html', data);
+            mu.compileText('layout.html', data);
 
-          var stream = mu.render('layout.html', view)
-            .on('data', function (chunks) { 
-              buffer += chunks;
-            })
-            .on('end',  function () {
-              res.writeHead(200, {'Content-Type': 'text/html'});
-              res.write(buffer);
-              res.end();
-            })
-            .on('error', function (err) { numErrors++; });
+            var stream = mu.render('layout.html', view)
+              .on('data', function (chunks) { 
+                buffer += chunks;
+              })
+              .on('end',  function () {
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.write(buffer);
+                res.end();
+                cache['homepage'] = buffer;
+              })
+              .on('error', function (err) { numErrors++; });
 
-        };
+          };
 
-        couchdb.getView('/_design/posts/_view/posts', handler);
+          couchdb.getView('/_design/posts/_view/posts', handler);
 
-      });
+        });
 
+      }
 
+    break;
+    case '/clearcache':
+      if (cache.homepage) {
+        delete cache.homepage;
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write('cache reset');
+        res.end();
+      } else {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write('cache not set');
+        res.end();
+      }
     break;
     case '/styles.css':
       var fileEmitter = new events(),
