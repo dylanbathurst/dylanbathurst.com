@@ -8,8 +8,17 @@ var sys = require('sys'),
     fs = require('fs');
 
 
-var cache = {};
+var cache = {},
+    couchHost,
+    serverPort;
 
+if (process.env.DEV) {
+  couchHost = '127.0.0.1';
+  serverPort = 8080;
+} else {
+  couchHost = 'dylan.couchone.com';
+  serverPort = 80;
+}
 
 http.createServer(function (req, res) {
 
@@ -19,16 +28,14 @@ http.createServer(function (req, res) {
     case '/':
 
       if (cache.homepage) {
-        console.log('cached');
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(cache.homepage);
         res.end();
       } else {
-        console.log('not cached');
 
         couchdb.setup({
           db: 'dylanbathurstcom',
-          host: '127.0.0.1'
+          host: couchHost
         });
 
         var fileEmitter = new events(),
@@ -112,5 +119,5 @@ http.createServer(function (req, res) {
   }
 
 
-}).listen(8080);
+}).listen(serverPort);
 
