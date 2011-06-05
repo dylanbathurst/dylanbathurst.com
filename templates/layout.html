@@ -28,14 +28,16 @@
       </div>
     </section>
 
-    <article>
-      <div class="frame">
-        <h1>{{title}}</h1>
-        <section>
-          {{{post}}}
-        </section>
-      </div>
-    </article>
+    {{#posts}}
+      <article>
+        <div class="frame">
+          <h1>{{title}}</h1>
+          <section>
+            {{{post}}}
+          </section>
+        </div>
+      </article>
+    {{/posts}}
 
     <footer class="frame">
       <ul>
