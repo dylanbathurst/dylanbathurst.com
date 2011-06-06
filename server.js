@@ -27,7 +27,7 @@ http.createServer(function (req, res) {
   switch (uri) {
     case '/':
 
-      if (cache.homepage) {
+      if ('homepage' in cache) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(cache.homepage);
         res.end();
@@ -85,7 +85,7 @@ http.createServer(function (req, res) {
 
     break;
     case '/clearcache':
-      if (cache.homepage) {
+      if ('homepage' in cache) {
         delete cache.homepage;
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write('cache reset');
@@ -121,6 +121,3 @@ http.createServer(function (req, res) {
 
 }).listen(serverPort);
 
-// Go Go Gadget Comment!
-// Go Go Gadget Comment Again!
-// i love you dylanbathurst
