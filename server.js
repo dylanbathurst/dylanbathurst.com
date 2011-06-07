@@ -116,6 +116,11 @@ http.createServer(function (req, res) {
       });
 
     break;
+    default:
+      res.writeHead(404, {'Content-Type': 'text/html'});
+      res.write('fail... Go <a href="/">Home</a> Idiot.');
+      res.end();
+    break;
   }
 
 

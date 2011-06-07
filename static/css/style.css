@@ -8,20 +8,21 @@ a:hover {color:#333; text-decoration:none;}
 
 #content .frame {width:720px; margin:0 auto;}
 header {padding:10px 0; border-bottom:1px solid #999;}
-header a {font-size:2em; font-weight:700; text-decoration:none;}
+header a {font-size:2em; font-weight:700; text-decoration:none; font-family: 'Cabin', serif; font-size:30px; font-weight: 400; line-height:1.2em;}
 #meta {height:300px; border-top:1px solid #fff; border-bottom:1px solid #999; background:#eee;}
 #meta #photo {height:280px; width:200px; overflow:hidden; margin:5px 0 0; float:left; background:#333 url('http://a1.twimg.com/profile_images/686858673/4324110983_2e16c4aa79.jpeg') no-repeat -40px -40px; border:solid #999; border-width:4px 0; border-radius:10px;}
 #meta #info {float:right; width:400px; text-align:right; font-size:20px;}
 
-#info ul {margin:70px 0 0;}
+#info ul {margin:70px 0 0; font-family: 'Cabin', serif;}
 #info li {margin:0 0 25px; direction:rtl;}
 
 article {padding:10px 0;}
 article:first-of-type {padding:10px 0; border-top:1px solid #fff;}
+article:last-of-type {border-bottom:1px solid #999;}
 article h1 {font-size:1.8em;}
 article .postBody {line-height:1.7em;}
 article .postBody p {margin:0 0 30px;}
 
-footer {padding:10px 0; border:solid #999; border-width:1px 0 0;}
+footer {padding:10px 0;}
 footer ul {list-style:none;}
 footer li {display:inline; margin:0 5px 0 0;}
