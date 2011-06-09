@@ -9,16 +9,11 @@ var sys = require('sys'),
 
 
 var cache = {},
-    couchHost,
+    cHost,
     serverPort;
 
-if (process.env.DEV) {
-  couchHost = '127.0.0.1';
-  serverPort = 8080;
-} else {
-  couchHost = 'dylan.couchone.com';
-  serverPort = 80;
-}
+cHost = process.env.COUCHHOST || '127.0.0.1';
+serverPort = process.env.PORT || 8080;
 
 http.createServer(function (req, res) {
 
@@ -35,7 +30,7 @@ http.createServer(function (req, res) {
 
         couchdb.setup({
           db: 'dylanbathurstcom',
-          host: couchHost
+          host: cHost
         });
 
         var fileEmitter = new events(),
