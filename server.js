@@ -1,19 +1,9 @@
-var sys = require('sys'),
-    http = require('http'),
+var http = require('http'),
     path = require('path'),
     url = require('url'),
-    mu = require('mu'),
-    events = require('events').EventEmitter,
-    couchdb = require('./lib/couchdb'),
-    fs = require('fs');
+    pages = require('./lib/pages');
 
-
-var cache = {},
-    cHost,
-    serverPort;
-
-cHost = process.env.COUCHHOST || '127.0.0.1';
-serverPort = process.env.PORT || 8080;
+var serverPort = process.env.PORT || 8080;
 
 http.createServer(function (req, res) {
 
@@ -22,99 +12,23 @@ http.createServer(function (req, res) {
   switch (uri) {
     case '/':
 
-      if ('homepage' in cache) {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(cache.homepage);
-        res.end();
-      } else {
-
-        couchdb.setup({
-          db: 'dylanbathurstcom',
-          host: cHost
-        });
-
-        var fileEmitter = new events(),
-            view = {posts: []};
-
-
-        mu.fs('./templates/layout.html', function (err, data) {
-          if (err) throw err;
-
-          var handler = function (posts) {
-            var couchRes = JSON.parse(posts), i, len, buff = '';
-
-            len = couchRes.rows.length;
-
-            for (var i = 0; i < len; i++) {
-              var post = couchRes.rows[i].value,
-                  title = post.title,
-                  body = post.post;
-
-              view.posts.push({title: title, post: body});
-            }
-
-            var numErrors = 0,
-                buffer = '';
-
-            mu.compileText('layout.html', data);
-
-            var stream = mu.render('layout.html', view)
-              .on('data', function (chunks) { 
-                buffer += chunks;
-              })
-              .on('end',  function () {
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.write(buffer);
-                res.end();
-                cache['homepage'] = buffer;
-              })
-              .on('error', function (err) { numErrors++; });
-
-          };
-
-          couchdb.getView('/_design/posts/_view/posts', handler);
-
-        });
-
-      }
+      pages.home(req, res);
 
     break;
     case '/clearcache':
-      if ('homepage' in cache) {
-        delete cache.homepage;
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write('cache reset');
-        res.end();
-      } else {
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write('cache not set');
-        res.end();
-      }
+
+      pages.clearcache(req, res);
+
     break;
     case '/styles.css':
-      var fileEmitter = new events(),
-          buffer = '';
 
-      fileEmitter.on('end', function () {
-        res.writeHead(200, {'Content-Type': 'text/css'});
-        res.write(buffer);
-        res.end();
-      });
-
-      fs.readFile('./static/css/style.css', function (err, data) {
-        if (err) {
-          fileEmitter.emit('error');
-        }
-  
-        buffer += data;
-        fileEmitter.emit('end');
-      });
+      pages.styles(req, res);
 
     break;
     default:
-      res.writeHead(404, {'Content-Type': 'text/html'});
-      res.write('fail... Go <a href="/">Home</a> Idiot.');
-      res.end();
+
+      pages.error(req, res);
+
     break;
   }
 

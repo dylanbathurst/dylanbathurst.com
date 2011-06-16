@@ -2,17 +2,16 @@
 
 *::selection {background-color:#ddd; text-shadow:0px 1px 0px #fff;}
 
-html {background:#ddd; font-size:15px; color:#333; font-family: Helvetica, Arial, "MS Trebuchet", sans-serif;}
+html {background:#ddd; font-size:15px; color:#333;}
 a {color:#000;}
 a:hover {color:#333; text-decoration:none;}
 
-header a,
-#info ul,
-footer {font-family: 'Shanti', serif;}
+body {font-family: 'Shanti', serif;}
 
 #content .frame {width:720px; margin:0 auto;}
 header {padding:10px 0; border-bottom:1px solid #999;}
 header a {font-size:2em; font-weight:700; text-decoration:none; font-size:30px; font-weight: 400; line-height:1.2em; text-shadow:0 1px 0 #fff; color:#333;}
+header a span {font-size:.6em; color:#777;}
 #meta {height:300px; border-top:1px solid #fff; border-bottom:1px solid #999; background:#eee;}
 #meta #photo {height:280px; width:200px; overflow:hidden; margin:5px 0 0; float:left; background:#333 url('http://a1.twimg.com/profile_images/686858673/4324110983_2e16c4aa79.jpeg') no-repeat -40px -40px; border:solid #999; border-width:4px 0; border-radius:10px;}
 #meta #info {float:right; width:400px; text-align:right; font-size:20px;}
