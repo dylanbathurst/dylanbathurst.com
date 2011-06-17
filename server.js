@@ -3,6 +3,7 @@ var http = require('http'),
     url = require('url'),
     pages = require('./lib/pages');
 
+console.log(process.env.PORT);
 var serverPort = process.env.PORT || 8080;
 
 http.createServer(function (req, res) {
