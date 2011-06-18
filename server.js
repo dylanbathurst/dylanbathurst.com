@@ -4,7 +4,7 @@ var http = require('http'),
     pages = require('./lib/pages'),
     mu = require('mu'),
     events = require('events').EventEmitter,
-    couchdb = require('./couchdb'),
+    couchdb = require('./lib/couchdb'),
     fs = require('fs');
 
 var cache = {},
