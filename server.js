@@ -34,5 +34,5 @@ http.createServer(function (req, res) {
   }
 
 
-}).listen(serverPort);
+}).listen(80);
 
