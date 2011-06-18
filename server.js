@@ -1,7 +1,11 @@
 var http = require('http'),
     path = require('path'),
     url = require('url'),
-    pages = require('./lib/pages');
+    pages = require('./lib/pages'),
+    mu = require('mu'),
+    events = require('events').EventEmitter,
+    couchdb = require('./couchdb'),
+    fs = require('fs');
 
 var cache = {},
     couchHost,
