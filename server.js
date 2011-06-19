@@ -11,10 +11,13 @@ var cache = {},
     couchHost,
     serverPort;
 
-serverPort = process.env.PORT || 8080;
-couchHost = process.env.COUCHHOST || '127.0.0.1';
-
-console.log(couchHost + ' ============ ' + serverPort);
+if (process.env.DEV) {
+  couchHost = '127.0.0.1';
+  serverPort = 8080;
+} else {
+  couchHost = 'dylan.couchone.com';
+  serverPort = 80;
+}
 
 http.createServer(function (req, res) {
 
