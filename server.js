@@ -14,6 +14,8 @@ var cache = {},
 serverPort = process.env.PORT || 8080;
 couchHost = process.env.COUCHHOST || '127.0.0.1';
 
+console.log(couchHost + ' ============ ' + serverPort);
+
 http.createServer(function (req, res) {
 
   var uri = url.parse(req.url).pathname;
