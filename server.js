@@ -7,7 +7,7 @@ app.get('/', function (req, res, next) {
   res.writeHead(200, {'Content-Type': 'application/json'});
 
   var options = {
-    host: 'blazing-galaxy-2505.herokuapp.com',
+    host: 'apime.herokuapp.com',
     path: '/dylanbathurst',
     method: 'GET'
   };
