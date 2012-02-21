@@ -1,0 +1,11 @@
+{
+  "name": "dylanbathurst",
+  "version": "100.0.1",
+  "dependencies": {
+    "express": "2.5.4"
+  },
+  "engines": {
+    "node": "0.4.x"
+  }
+}
+

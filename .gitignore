@@ -2,3 +2,4 @@
 *.swo
 *.nodemonignore
 *.monitor
+node_modules
